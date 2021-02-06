@@ -34,7 +34,7 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car )
         {
-            _Cars.Remove(GetById(car.Id));
+            _Cars.Remove(car);
         }
 
         public List<Car> GetAll()
@@ -42,14 +42,14 @@ namespace DataAccess.Concrete.InMemory
             return _Cars;
         }
 
-        public Car GetById(int carID)
+        public Car GetById(Car car)
         {
-            return _Cars.SingleOrDefault(c => c.Id == carID);
+            return _Cars.SingleOrDefault(c => c.Id == c.Id);
         }
 
         public void Update(Car car)
         {
-            Car carToUpdate = GetById(car.Id);
+            Car carToUpdate = _Cars.SingleOrDefault(c => c.Id == car.Id);
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;

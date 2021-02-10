@@ -34,6 +34,7 @@ namespace Business.Concrete
 
         public void Delete(Car entity)
         {
+            Console.WriteLine(entity.Id + "Li araç Silindi ");
             _carDal.Delete(entity);
         }
 
@@ -54,7 +55,9 @@ namespace Business.Concrete
         }
         public void Update(Car entity)
         {
+            Console.WriteLine(entity.Id+"Li araç Güncellendi");
             _carDal.Update(entity);
+            
         }
     }
 }

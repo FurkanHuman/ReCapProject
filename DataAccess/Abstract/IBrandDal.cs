@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Business.Abstract
+namespace DataAccess.Abstract
 {
-    public interface ICarService:IServiceRepository<Car>
+    public interface IBrandDal:IEntityRepository<Brand>
     {
     }
 }

@@ -1,43 +1,60 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Abstract;
+using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        readonly ICarDal _carDal;
+        readonly int rentMoney = 0;
+        readonly int descriptionLength = 2;
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public void Add(Car entity)
         {
-            _carDal.Add(car);   
+            if (entity.DailyPrice > rentMoney && entity.Descriptions.Length > descriptionLength)
+            {
+                _carDal.Add(entity);
+                Console.WriteLine("Araç Eklendi");
+            }
+            else 
+            {
+                Console.WriteLine("Hata aracın kiralama maliyeti " + rentMoney + " dan büyk olmalıdır.\n" +
+                    "veya açklaması 2 karakter ve üstü olmalıdır.");
+            }
         }
 
-        public void Delete(Car car)
+        public void Delete(Car entity)
         {
-            _carDal.Delete(car);
+            _carDal.Delete(entity);
         }
+
 
         public List<Car> GetAll()
         {
-           return _carDal.GetAll();
+            return _carDal.GetAll();
         }
 
-        public Car GetById(Car car)
+        public Car GetById(int id)
         {
-            return _carDal.GetById(car);
+            return _carDal.Get(c => c.Id == id);
         }
 
-        public void Update(Car car)
+        public List<CarDetailDto> GetCarDetailDtos()
         {
-            _carDal.Update(car);
+            return _carDal.GetCarDetails();
+        }
+        public void Update(Car entity)
+        {
+            _carDal.Update(entity);
         }
     }
 }

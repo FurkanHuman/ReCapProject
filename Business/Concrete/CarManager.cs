@@ -8,6 +8,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -56,6 +57,11 @@ namespace Business.Concrete
         {
             _carDal.Update(entity);
             return new SuccessResult();
+        }
+
+       public IDataResult<List<CarDetailDto>> ICarService.GetCarDetailDtos()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails, Messages.Listed);
         }
 
 
@@ -133,10 +139,6 @@ namespace Business.Concrete
         //    return _carDal.Get(c => c.Id == id);
         //}
 
-        //public List<CarDetailDto> GetCarDetailDtos()
-        //{
-        //    return _carDal.GetCarDetails();
-        //}
         //public void Update(Car entity)
         //{
         //    Console.WriteLine(entity.Id+"Li araç Güncellendi");

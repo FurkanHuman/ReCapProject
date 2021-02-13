@@ -28,9 +28,9 @@ namespace ConsoleUI
 
             Console.WriteLine("-------------------------------carManager.GetCarDetailDtos-------------------------------");
 
-            foreach (var cars in carManager.GetCarDetailDtos())
+            foreach (var cars in carManager.)
             {
-                Console.WriteLine(@"Model Yılı: " + cars.ModelYear.Year + " / Markası: " + cars.BrandName + " / Rengi: " + cars.ColorName +
+                Console.WriteLine(@"Model Yılı: " + cars.ModelYear.Year + " / Markası: " + cars.BrandId + " / Rengi: " + cars.ColorId +
                     " / Günlük Kiralama Bedeli: " + cars.DailyPrice + " TL / Açıklama: " + cars.Descriptions);
             }
 
@@ -41,14 +41,14 @@ namespace ConsoleUI
 
             Console.WriteLine("-------------------------------colorManager.GetAll-------------------------------");
 
-            foreach (var colors in colorManager.GetAll())
+            foreach (var colors in colorManager.GetAll().Data)
             {
                 Console.WriteLine(@"Renk Id: " + colors.Id + " / Renk Adı: " + colors.Name);
             }
             
             Console.WriteLine("-------------------------------brandManager.GetAll-------------------------------");
 
-            foreach (var brands in brandManager.GetAll())
+            foreach (var brands in brandManager.GetAll().Data)
             {
                 Console.WriteLine(@"Marka Id: " + brands.Id + " / Marka Adı: " + brands.Name);
             }

@@ -6,6 +6,6 @@ using System.Text;
 namespace Business.Abstract
 {
     public interface IColorService:IServiceRepository<Color>
-    {
+    {       
     }
 }

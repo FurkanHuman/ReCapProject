@@ -20,10 +20,11 @@ namespace ConsoleUI
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
             // rasgele veri tabanına araç yerleştirme fonksiypnu
-            /**/for (int i = 0; i < 175; i++)
+            for (int i = 0; i < 175; i++)
             {
-                carManager.Add(new Car() {BrandId=new Random().Next(1,10),ColorId=  new Random().Next(1, 10), DailyPrice = new Random().Next(50, 750),Descriptions="Auto Added",ModelYear=new DateTime().AddYears(new Random().Next(1998, 2021)) });            
+                carManager.Add(new Car() { BrandId = new Random().Next(1, 10), ColorId = new Random().Next(1, 10), DailyPrice = new Random().Next(50, 750), Descriptions = "Auto Added", ModelYear = new DateTime().AddYears(new Random().Next(1998, 2021)) });            
             }
+            
 
             Console.WriteLine("-------------------------------carManager.GetCarDetailDtos-------------------------------");
 

@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Abstract;
 using Entities.Concrete;
@@ -18,46 +21,127 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car entity)
+        public IResult Add(Car entity)
         {
             if (entity.DailyPrice > rentMoney && entity.Descriptions.Length > descriptionLength)
             {
                 _carDal.Add(entity);
-                Console.WriteLine("Araç Eklendi");
+                return new SuccessResult();
             }
-            else 
+            else
             {
-                Console.WriteLine("Hata aracın kiralama maliyeti " + rentMoney + " dan büyk olmalıdır.\n" +
-                    "veya açklaması 2 karakter ve üstü olmalıdır.");
+                return new ErrorResult();
+                //Console.WriteLine("Hata aracın kiralama maliyeti " + rentMoney + " dan büyk olmalıdır.\n" +
+                //    "veya açklaması 2 karakter ve üstü olmalıdır.");
             }
         }
 
-        public void Delete(Car entity)
+        public IResult Delete(Car entity)
         {
-            Console.WriteLine(entity.Id + "Li araç Silindi ");
             _carDal.Delete(entity);
+            return new SuccessResult();
         }
 
-
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
-        public List<CarDetailDto> GetCarDetailDtos()
+        public IResult Update(Car entity)
         {
-            return _carDal.GetCarDetails();
-        }
-        public void Update(Car entity)
-        {
-            Console.WriteLine(entity.Id+"Li araç Güncellendi");
             _carDal.Update(entity);
-            
+            return new SuccessResult();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //}
+
+        //public void Add(Car entity)
+        //{
+        //    if (entity.DailyPrice > rentMoney && entity.Descriptions.Length > descriptionLength)
+        //    {
+        //        _carDal.Add(entity);
+        //        Console.WriteLine("Araç Eklendi");
+        //    }
+        //    else 
+        //    {
+        //        Console.WriteLine("Hata aracın kiralama maliyeti " + rentMoney + " dan büyk olmalıdır.\n" +
+        //            "veya açklaması 2 karakter ve üstü olmalıdır.");
+        //    }
+        //}
+
+        //public void Delete(Car entity)
+        //{
+        //    Console.WriteLine(entity.Id + "Li araç Silindi ");
+        //    _carDal.Delete(entity);
+        //}
+
+
+        //public List<Car> GetAll()
+        //{
+        //    return _carDal.GetAll();
+        //}
+
+        //public Car GetById(int id)
+        //{
+        //    return _carDal.Get(c => c.Id == id);
+        //}
+
+        //public List<CarDetailDto> GetCarDetailDtos()
+        //{
+        //    return _carDal.GetCarDetails();
+        //}
+        //public void Update(Car entity)
+        //{
+        //    Console.WriteLine(entity.Id+"Li araç Güncellendi");
+        //    _carDal.Update(entity);
+
+        //}
     }
 }

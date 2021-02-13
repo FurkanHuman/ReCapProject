@@ -27,10 +27,10 @@ namespace ConsoleUI
             
 
             Console.WriteLine("-------------------------------carManager.GetCarDetailDtos-------------------------------");
-
-            foreach (var cars in carManager.)
+            
+            foreach (var cars in carManager.GetCarDetailDtos().Data)
             {
-                Console.WriteLine(@"Model Yılı: " + cars.ModelYear.Year + " / Markası: " + cars.BrandId + " / Rengi: " + cars.ColorId +
+                Console.WriteLine(@"Model Yılı: " + cars.ModelYear.Year + " / Markası: " + cars.BrandName+ " / Rengi: " + cars.ColorName+
                     " / Günlük Kiralama Bedeli: " + cars.DailyPrice + " TL / Açıklama: " + cars.Descriptions);
             }
 

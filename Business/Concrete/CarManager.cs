@@ -53,16 +53,17 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarDetailDtos()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.Listed);
+        }
+
         public IResult Update(Car entity)
         {
             _carDal.Update(entity);
             return new SuccessResult();
         }
 
-       public IDataResult<List<CarDetailDto>> ICarService.GetCarDetailDtos()
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails, Messages.Listed);
-        }
 
 
 

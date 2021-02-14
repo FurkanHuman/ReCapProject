@@ -4,9 +4,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -16,8 +14,8 @@ namespace Business.Concrete
 
         public ColorManager(IColorDal colorDal)
         {
-           _colorDal = colorDal;
-       }
+            _colorDal = colorDal;
+        }
 
         public IResult Add(Color entity)
         {
@@ -33,7 +31,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),Messages.Listed);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<Color> GetById(int id)

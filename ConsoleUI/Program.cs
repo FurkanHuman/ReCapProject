@@ -1,6 +1,5 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFrameWork;
-using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -15,6 +14,7 @@ namespace ConsoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             UserManager userManager = new UserManager(new EfUserDal());
+
             Console.WriteLine("-------------------------------userManager.GetAll()-------------------------------");
 
             foreach (var users in userManager.GetAll().Data)
@@ -38,7 +38,6 @@ namespace ConsoleUI
                 Console.WriteLine(@"Arac Id: " + rentals.CarId + " Müşteri Adı / : " + rentals.FirstName + " / Kiralama Tarihi: " + rentals.RentDate +
                     " / geri getirme Tarihi: " + rentals.ReturntDate);
             }
-
 
             Console.WriteLine("-------------------------------colorManager.GetAll-------------------------------");
 

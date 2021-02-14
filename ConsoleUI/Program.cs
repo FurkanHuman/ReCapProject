@@ -12,16 +12,15 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            //UserManager userManager = new UserManager(new EfUserDal());
-            
-            
-            // rasgele veri tabanına araç yerleştirme fonksiypnu
-            /*for (int i = 0; i < 175; i++)
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            UserManager userManager = new UserManager(new EfUserDal());
+            Console.WriteLine("-------------------------------userManager.GetAll()-------------------------------");
+
+            foreach (var users in userManager.GetAll().Data)
             {
-                carManager.Add(new Car() { BrandId = new Random().Next(1, 10), ColorId = new Random().Next(1, 10), DailyPrice = new Random().Next(50, 750), Descriptions = "Auto Added", ModelYear = new DateTime().AddYears(new Random().Next(1998, 2021)) });
-            }*/
+                Console.WriteLine(users.FirstName + " " + users.LastName + " " + users.Email);
+            }
 
 
             Console.WriteLine("-------------------------------carManager.GetCarDetailDtos-------------------------------");
@@ -32,8 +31,14 @@ namespace ConsoleUI
                     " / Günlük Kiralama Bedeli: " + cars.DailyPrice + " TL / Açıklama: " + cars.Descriptions);
             }
 
-            carManager.Delete(new Car() { Id = new Random().Next(1652, 1826) });
-            carManager.Update(new Car() { Id = new Random().Next(1652, 1826), BrandId = new Random().Next(1, 10), ColorId = new Random().Next(1, 10), DailyPrice = new Random().Next(50, 750), Descriptions = "Auto Added", ModelYear = new DateTime().AddYears(new Random().Next(1998, 2021)) });
+            Console.WriteLine("-------------------------------rentalManager.GetRentalDetailsDtos()-------------------------------");
+
+            foreach (var rentals in rentalManager.GetRentalDetailsDtos().Data)
+            {
+                Console.WriteLine(@"Arac Id: " + rentals.CarId + " Müşteri Adı / : " + rentals.FirstName + " / Kiralama Tarihi: " + rentals.RentDate +
+                    " / geri getirme Tarihi: " + rentals.ReturntDate);
+            }
+
 
             Console.WriteLine("-------------------------------colorManager.GetAll-------------------------------");
 
@@ -51,3 +56,31 @@ namespace ConsoleUI
         }
     }
 }
+//carManager.Delete(new Car() { Id = new Random().Next(1652, 1826) });
+//carManager.Update(new Car() { Id = new Random().Next(1652, 1826), BrandId = new Random().Next(1, 10), ColorId = new Random().Next(1, 10), DailyPrice = new Random().Next(50, 750), Descriptions = "Auto Added", ModelYear = new DateTime().AddYears(new Random().Next(1998, 2021)) });
+//// rasgele veri tabanına araç yerleştirme fonksiypnu
+//for (int i = 0; i < 250; i++)
+//{
+//    carManager.Add(new Car()
+//    {
+//        BrandId = new Random().Next(1, 10),
+//        ColorId = new Random().Next(1, 10),
+//        DailyPrice = new Random().Next(50, 750),
+//        Descriptions = "Auto Added",
+//        ModelYear = new DateTime().AddYears(new Random().Next(1998, 2021))
+//    });
+//}
+
+//while (true)
+//{
+
+
+//    User user = new User()
+//    {
+//        FirstName = Console.ReadLine().ToUpper(),
+//        LastName = Console.ReadLine().ToUpper(),
+//        Email = Console.ReadLine(),
+//        Password = Console.ReadLine()
+//    };
+//    userManager.Add(user);
+//}

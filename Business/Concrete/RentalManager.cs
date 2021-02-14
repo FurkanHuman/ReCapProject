@@ -4,6 +4,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,8 +22,14 @@ namespace Business.Concrete
 
         public IResult Add(Rental entity)
         {
-           _rentalDal.Add(entity);
-           return new SuccessResult();
+            if (entity.ReturnDate==null)
+            {
+                return new ErrorResult();
+            }
+
+            _rentalDal.Add(entity);
+
+            return new SuccessResult();
         }
 
         public IResult Delete(Rental entity)
@@ -39,6 +46,11 @@ namespace Business.Concrete
         public IDataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r=>r.Id==id), Messages.Listed);
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetailsDtos()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetailDtos(), Messages.Listed);
         }
 
         public IResult Update(Rental entity)

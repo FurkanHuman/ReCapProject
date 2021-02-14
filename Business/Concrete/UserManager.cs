@@ -12,7 +12,7 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUserDal _userDal;
+      readonly  IUserDal _userDal;
 
         public UserManager(IUserDal userDal)
         {

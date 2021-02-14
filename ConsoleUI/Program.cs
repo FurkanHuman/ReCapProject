@@ -1,7 +1,5 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFrameWork;
-using DataAccess.Concrete.InMemory;
-using Entities.Abstract;
 using Entities.Concrete;
 using System;
 
@@ -14,9 +12,9 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            UserManager userManager = new UserManager(new EfUserDal());
+            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //UserManager userManager = new UserManager(new EfUserDal());
             
             
             // rasgele veri tabanına araç yerleştirme fonksiypnu

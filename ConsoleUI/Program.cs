@@ -7,6 +7,7 @@ namespace ConsoleUI
     class Program
     {
         static void Main(string[] args)
+        
         {
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());

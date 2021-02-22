@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Utilities.Aspects.Autıfac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -19,19 +21,11 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car entity)
         {
-            if (entity.DailyPrice > rentMoney && entity.Descriptions.Length > descriptionLength)
-            {
-                _carDal.Add(entity);
-                return new SuccessResult();
-            }
-            else
-            {
-                return new ErrorResult();
-                //Console.WriteLine("Hata aracın kiralama maliyeti " + rentMoney + " dan büyk olmalıdır.\n" +
-                //    "veya açklaması 2 karakter ve üstü olmalıdır.");
-            }
+               _carDal.Add(entity);
+                return new SuccessResult();            
         }
 
         public IResult Delete(Car entity)
@@ -55,10 +49,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.Listed);
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car entity)
         {
             _carDal.Update(entity);
             return new SuccessResult();
-        }        
+        }
     }
 }

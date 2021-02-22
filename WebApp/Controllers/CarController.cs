@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/car")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CarController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("Getalldto")]
-        public IActionResult GetAllDto ()
+        public IActionResult GetAllDto()
         {
             var result = _carService.GetCarDetailDtos();
             if (result.Success)
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-        
+
         [HttpPost("Update")]
         public IActionResult Update(Car car)
         {
@@ -67,6 +67,6 @@ namespace WebAPI.Controllers
             if (result.Success)
                 return Ok(result);
             return BadRequest(result);
-        }        
+        }
     }
 }

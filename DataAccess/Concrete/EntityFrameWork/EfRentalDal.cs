@@ -1,4 +1,5 @@
-﻿using Core.DataAccess.EntityFramework;
+﻿using System;
+using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -34,7 +35,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
                                  RentDate = r.RentDate,
-                                 ReturntDate = r.ReturnDate
+                                 ReturntDate = (DateTime)r.ReturnDate
                              };
                 return result.ToList();
             }

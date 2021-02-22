@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/color")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ColorController : ControllerBase
     {

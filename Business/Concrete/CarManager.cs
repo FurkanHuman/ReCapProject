@@ -14,8 +14,6 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         readonly ICarDal _carDal;
-        readonly int rentMoney = 0;
-        readonly int descriptionLength = 2;
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;

@@ -17,6 +17,24 @@ namespace ConsoleUI
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             UserManager userManager = new UserManager(new EfUserDal());
 
+
+            //var rn = new Random();
+            
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    DateTime date2 = new DateTime(rn.Next(2019, 2021), rn.Next(1, 12), rn.Next(1, 28));
+            //    DateTime date1 = new DateTime(rn.Next(2019, 2021), rn.Next(1, 12), rn.Next(1, 28));
+
+
+            //    rentalManager.Add(new Rental()
+            //    {
+            //        CarId = new Random().Next(1, 250),
+            //        CustomerId = new Random().Next(1, 10),
+            //        RentDate = date1,
+            //        ReturnDate = date2
+            //    });
+            //}
+
             Console.WriteLine("-------------------------------userManager.GetAll()-------------------------------");
 
             foreach (var users in userManager.GetAll().Data)
@@ -36,7 +54,7 @@ namespace ConsoleUI
             foreach (var cars in carManager.GetCarDetailDtos().Data)
             {
                 Console.WriteLine(@"Model Yılı: " + cars.ModelYear.Year + " / Markası: " + cars.BrandName + " / Rengi: " + cars.ColorName +
-                    " / Günlük Kiralama Bedeli: " + cars.DailyPrice + " TL / Açıklama: " + cars.Descriptions);
+                    " / Günlük Kiralama Bedeli: " + cars.DailyPrice + " TL / Açıklama: " + cars.Descriptions+" Id "+cars.Id);
             }
 
             Console.WriteLine("-------------------------------rentalManager.GetRentalDetailsDtos()-------------------------------");
@@ -61,21 +79,7 @@ namespace ConsoleUI
                 Console.WriteLine(@"Marka Id: " + brands.Id + " / Marka Adı: " + brands.Name);
             }
 
-            //for (int i = 0; i < 15; i++)
-            //{
-            //    var date1 = new datetime();
-            //    date1.addyears(new random().next(2019, 2021)).addmonths(new random().next(1, 31)).adddays(new random().next(1, 31)).toshortdatestring();
-            //    var date2 = new datetime();
-            //    date2.addyears(new random().next(2019, 2021)).addmonths(new random().next(1, 31)).adddays(new random().next(1, 31)).toshortdatestring();
 
-            //    rentalmanager.add(new rental()
-            //    {
-            //        carıd = new random().next(1, 250),
-            //        customerıd = new random().next(1, 10),
-            //        rentdate = date1,
-            //        returndate = date2
-            //    });
-            //}
 
             //for (int i = 0; i < 250; i++)
             //{

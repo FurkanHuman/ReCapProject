@@ -6,7 +6,7 @@
         { }
         public SuccessDataResult(T data) : base(data, true)
         { }
-        public SuccessDataResult(Abstract.IDataResult<System.Collections.Generic.List<global::Entities.Concrete.CarImage>> dataResult, string message) : base(default, true, message)
+        public SuccessDataResult(string message) : base(default, true, message)
         { }
         public SuccessDataResult() : base(default, true)
         { }

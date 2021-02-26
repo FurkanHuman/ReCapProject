@@ -6,5 +6,7 @@
         public static string ProductNameInvalid = "Ürün ismi geçersiz";
         public static string MaintenanceTime = "Sistem bakımda";
         public static string Listed = "listelendi";
+
+        public static string OutOfRangePicCount = "En fazla 5 resim eklenebilir";
     }
 }

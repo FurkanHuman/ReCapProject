@@ -3,9 +3,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.İnterceptors;
 using FluentValidation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Core.Utilities.Aspects.Autıfac.Validation
 {

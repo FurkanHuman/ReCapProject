@@ -14,6 +14,7 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         readonly ICarDal _carDal;
+        
         public CarManager(ICarDal carDal)
         {
             _carDal = carDal;

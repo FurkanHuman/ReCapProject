@@ -8,35 +8,46 @@ namespace Core.Utilities.FileHelper
 {
     public class FileHelper
     {
+        
         public static string AddAsync(IFormFile file)
         {
-            var sourcepath = Path.GetTempFileName();
-            if (file.Length > 0)
-                using (var stream = new FileStream(sourcepath, FileMode.Create))
-                    file.CopyTo(stream);
-
             var result = NewPath(file);
+            try
+            {
+                using (FileStream stream = File.Create(result))
+                {                    
+                    file.CopyTo(stream);
+                    stream.Flush();
+                }
 
-            File.Move(sourcepath, result);
-
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
             return result;
+
         }
 
         public static string UpdateAsync(string sourcePath, IFormFile file)
         {
             var result = NewPath(file);
 
-            //File.Copy(sourcePath,result);
-
-            if (sourcePath.Length > 0)
+            try
             {
-                using (var stream = new FileStream(result, FileMode.Create))
+                using (var stream = File.Create(result))
                 {
                     file.CopyTo(stream);
+                    stream.Flush();
                 }
-            }
 
-            File.Delete(sourcePath);
+                DeleteAsync(sourcePath);
+            }
+            catch (Exception exception)
+            {
+
+                return exception.Message;
+            }
 
             return result;
         }
@@ -58,20 +69,17 @@ namespace Core.Utilities.FileHelper
 
         public static string NewPath(IFormFile file)
         {
-            FileInfo ff = new FileInfo(file.FileName);
-            string fileExtension = ff.Extension;
 
-            var creatingUniqueFilename = Guid.NewGuid().ToString("D")
-               + "_" + DateTime.Now.Month + "_"
-               + DateTime.Now.Day + "_"
-               + DateTime.Now.Year + fileExtension;
+            string fileExtension = Path.GetExtension(file.FileName);
 
-            string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\wwwroot\Images");
+            var creatingUniqueFilename = Guid.NewGuid().ToString("B") + fileExtension;
 
-            string result = $@"{path}\{creatingUniqueFilename}";
-
-            return result;
+            string result = Environment.CurrentDirectory + @"\wwwroot\Images\" + creatingUniqueFilename;
+            
+            /*if (!Directory.Exists(@"\wwwroot\Images\"))
+                Directory.CreateDirectory(result);
+            */
+            return (result);
         }
-
     }
 }

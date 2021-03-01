@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult AddAsync([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
-            var res = _carImageService.Add2(file, carImage);
+            var res =_carImageService.Add(file, carImage);
             if (res.Success)
                 return Ok(res);
             return BadRequest(res);

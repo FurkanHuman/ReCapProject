@@ -5,9 +5,12 @@ using System.Collections.Generic;
 
 namespace Business.Abstract
 {
-    public interface ICarImageService : IServiceRepository<CarImage>
+    public interface ICarImageService
     {
-        IResult Add2(IFormFile formFile, CarImage entity);
+        IDataResult<List<CarImage>> GetAll();
+        IDataResult<CarImage> GetById(int id);
+        IResult Delete(CarImage entity);
+        IResult Add(IFormFile formFile, CarImage entity);
         IResult Update(IFormFile formFile, CarImage entity);
         IDataResult<List<CarImage>> GetImagesByCarId(int id);
     }

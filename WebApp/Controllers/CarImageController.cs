@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult AddAsync([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
-            var res =_carImageService.Add(file, carImage);
+            var res = _carImageService.Add(file, carImage);
             if (res.Success)
                 return Ok(res);
             return BadRequest(res);
@@ -55,8 +55,8 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete([FromForm(Name = ("Id"))] int id)
         {
-            var carImage = _carImageService.GetById(id).Data;
-            var result = _carImageService.Delete(carImage);
+            var carImage = _carImageService.GetById(id);
+            var result = _carImageService.Delete(carImage.Data);
 
             if (result.Success)
                 return Ok(result);

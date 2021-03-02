@@ -5,8 +5,13 @@ using System.Collections.Generic;
 
 namespace Business.Abstract
 {
-    public interface ICarService : IServiceRepository<Car>
+    public interface ICarService 
     {
+        IDataResult<List<Car>> GetAll();
+        IDataResult<Car> GetById(int id);
+        IResult Add(Car entity);
+        IResult Delete(Car entity);
+        IResult Update(Car entity);
         IDataResult<List<CarDetailDto>> GetCarDetailDtos();
     }
 }

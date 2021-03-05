@@ -18,7 +18,7 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        
+
 
         readonly ICarImageDal _carImageDal;
         public CarImageManager(ICarImageDal carImageDal)
@@ -30,7 +30,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(IFormFile formFile, CarImage entity)
         {
-            
+
             IResult result = BusinessRules.Run(CheckIfImageLimit(entity.CarId), CheckIfimageGetExtension(formFile));
             if (result != null)
                 return result;

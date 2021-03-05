@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Business.Abstract
 {
-    public interface ICarService 
+    public interface ICarService
     {
         IDataResult<List<Car>> GetAll();
         IDataResult<Car> GetById(int id);

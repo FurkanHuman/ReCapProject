@@ -15,7 +15,7 @@ namespace Core.Utilities.FileHelper
             try
             {
                 using (FileStream stream = File.Create(result.path))
-                {                    
+                {
                     file.CopyTo(stream);
                     stream.Flush();
                 }
@@ -55,7 +55,7 @@ namespace Core.Utilities.FileHelper
         {
             try
             {
-                File.Delete(Environment.CurrentDirectory+ path);
+                File.Delete(Environment.CurrentDirectory + path);
             }
 
             catch (Exception exception)
@@ -66,18 +66,18 @@ namespace Core.Utilities.FileHelper
             return new SuccessResult();
         }
 
-        public static  (string path, string halfPath) NewPath(IFormFile file)
+        public static (string path, string halfPath) NewPath(IFormFile file)
         {
 
             string fileExtension = Path.GetExtension(file.FileName);
 
             var creatingUniqueFilename = Guid.NewGuid().ToString("B") + fileExtension;
 
-            string result = fullPath+ creatingUniqueFilename;
+            string result = fullPath + creatingUniqueFilename;
 
             if (!Directory.Exists(fullPath))
                 Directory.CreateDirectory(result);
-            
+
             return (result, @"\wwwroot\Images\" + creatingUniqueFilename);
         }
     }

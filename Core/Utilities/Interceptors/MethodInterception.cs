@@ -1,7 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using System;
 
-namespace Core.Utilities.İnterceptors
+namespace Core.Utilities.Interceptors
 {
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {

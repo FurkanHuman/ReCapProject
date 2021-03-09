@@ -11,10 +11,10 @@ namespace Core.Utilities.FileHelper
         public static string fullPath;
         public static string AddAsync(IFormFile file)
         {
-            var result = NewPath(file);
+            var (path, halfPath) = NewPath(file);
             try
             {
-                using (FileStream stream = File.Create(result.path))
+                using (FileStream stream = File.Create(path))
                 {
                     file.CopyTo(stream);
                     stream.Flush();
@@ -25,16 +25,16 @@ namespace Core.Utilities.FileHelper
             {
                 return exception.Message;
             }
-            return result.halfPath;
+            return halfPath;
         }
 
         public static string UpdateAsync(string sourcePath, IFormFile file)
         {
-            var result = NewPath(file);
+            var (path, halfPath) = NewPath(file);
 
             try
             {
-                using (FileStream stream = File.Create(result.path))
+                using (FileStream stream = File.Create(path))
                 {
                     file.CopyTo(stream);
                     stream.Flush();
@@ -48,7 +48,7 @@ namespace Core.Utilities.FileHelper
                 return exception.Message;
             }
 
-            return result.halfPath;
+            return halfPath;
         }
 
         public static IResult DeleteAsync(string path)

@@ -1,10 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -39,7 +35,7 @@ namespace WebAPI.Controllers
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);
-            
+
             if (result.Success)
                 return Ok(result.Data);
             return BadRequest(result.Message);

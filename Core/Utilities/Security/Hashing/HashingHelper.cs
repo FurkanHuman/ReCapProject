@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace Core.Utilities.Security.Hashing
@@ -22,7 +20,7 @@ namespace Core.Utilities.Security.Hashing
             {
                 var computeHash = Hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-                for (int i = 0; i <computeHash.Length;  i++)
+                for (int i = 0; i < computeHash.Length; i++)
                 {
                     if (computeHash[i] == passwordHash[i])
                         return false;

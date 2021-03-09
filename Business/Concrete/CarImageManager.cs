@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Aspects.Autofac.Validation;
 using Core.Utilities.Busines;
 using Core.Utilities.FileHelper;
@@ -28,6 +30,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Add(IFormFile formFile, CarImage entity)
         {
 
@@ -43,6 +46,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(CarImage entity)
         {
             FileHelper.DeleteAsync(GetById(entity.Id).Data.ImagePath);
@@ -50,6 +54,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+
+        [ValidationAspect(typeof(BrandValidator))]
+        [SecuredOperation("Manager")]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
@@ -57,6 +64,7 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheAspect(5)]
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == id));
@@ -64,6 +72,7 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheAspect(5)]
         public IDataResult<List<CarImage>> GetImagesByCarId(int id)
         {
             return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
@@ -71,6 +80,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Update(IFormFile formFile, CarImage entity)
         {
             var oldpath = GetById(entity.Id).Data.ImagePath;

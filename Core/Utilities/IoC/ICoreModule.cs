@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Utilities.IoC.Abstract
+namespace Core.Utilities.IoC
 {
     public interface ICoreModule
     {

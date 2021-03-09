@@ -1,6 +1,6 @@
 ﻿using Core.CrossCuttingConcerns.Cashing;
 using Core.CrossCuttingConcerns.Cashing.Microsoft;
-using Core.Utilities.IoC.Abstract;
+using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 

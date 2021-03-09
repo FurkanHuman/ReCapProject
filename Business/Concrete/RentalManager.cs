@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -20,7 +22,7 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-
+        [CacheRemoveAspect("IRentalService.Get")]        
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental entity)
         {
@@ -34,29 +36,35 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [CacheRemoveAspect("IRentalService.Get")]
+        [ValidationAspect(typeof(RentalValidator))]
+        [SecuredOperation("Manager")]
         public IResult Delete(Rental entity)
         {
             _rentalDal.Delete(entity);
             return new SuccessResult();
         }
 
+        [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
         }
 
+        [CacheAspect]
         public IDataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.Listed);
         }
-
+        [CacheAspect(15)]
         public IDataResult<List<RentalDetailDto>> GetRentalDetailsDtos()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetailDtos(), Messages.Listed);
         }
 
 
-        [ValidationAspect(typeof(CustomerValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental entity)
         {
             _rentalDal.Update(entity);

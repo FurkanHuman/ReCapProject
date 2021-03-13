@@ -37,7 +37,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(UserValidator))]
-        [SecuredOperation("Manager")]
+    //    [SecuredOperation("Manager")]
         [CacheAspect(15)]
         public List<OperationClaim> GetClaims(User user)
         {

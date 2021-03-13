@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-
+        
         public AuthController(IAuthService authService)
         {
             _authService = authService;
@@ -31,7 +33,7 @@ namespace WebAPI.Controllers
         {
             var userExists = _authService.UserExists(userForRegisterDto.Email);
             if (!userExists.Success)
-                return BadRequest(userExists.Message);
+                return BadRequest();
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult.Data);

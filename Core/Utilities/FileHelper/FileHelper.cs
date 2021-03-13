@@ -68,7 +68,6 @@ namespace Core.Utilities.FileHelper
 
         public static (string path, string halfPath) NewPath(IFormFile file)
         {
-
             string fileExtension = Path.GetExtension(file.FileName);
 
             var creatingUniqueFilename = Guid.NewGuid().ToString("B") + fileExtension;

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace Business.Abstract
 {
-
     public interface IBrandService
     {
         IDataResult<List<Brand>> GetAll();
@@ -12,7 +11,5 @@ namespace Business.Abstract
         IResult Add(Brand entity);
         IResult Delete(Brand entity);
         IResult Update(Brand entity);
-
     }
-
 }

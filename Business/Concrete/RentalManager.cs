@@ -3,6 +3,7 @@ using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Aspects.Autofac.Validation;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
@@ -22,7 +23,7 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-        [CacheRemoveAspect("IRentalService.Get")]        
+        [CacheRemoveAspect("IRentalService.Get")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental entity)
         {
@@ -56,7 +57,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.Listed);
         }
+        
+        
         [CacheAspect(15)]
+//        [PerformanceAspect(10)]
         public IDataResult<List<RentalDetailDto>> GetRentalDetailsDtos()
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetailDtos(), Messages.Listed);

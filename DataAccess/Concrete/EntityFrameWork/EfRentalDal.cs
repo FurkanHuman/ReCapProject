@@ -19,18 +19,25 @@ namespace DataAccess.Concrete.EntityFrameWork
                              join c in context.Cars
                              on r.CarId equals c.Id
 
+                             join co in context.Colors
+                             on c.ColorId equals co.Id
+
                              join cu in context.Customers
                              on r.CustomerId equals cu.Id
 
                              join u in context.Users
                              on cu.UserId equals u.Id
 
+                             join b in context.Brands
+                             on c.BrandId equals b.Id
+
                              select new RentalDetailDto
                              {
                                  Id = r.Id,
-                                 CarId = c.Id,
-                                 BrandId = c.BrandId,
-                                 ColorId = c.ColorId,
+                                 BrandName = b.Name,
+                                 ColorName = co.Name,
+                                 DailyPrice = c.DailyPrice,
+                                 Descriptions = c.Descriptions,
                                  Email = u.Email,
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,

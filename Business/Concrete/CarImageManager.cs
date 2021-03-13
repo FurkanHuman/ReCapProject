@@ -136,6 +136,8 @@ namespace Business.Concrete
 
         private IResult CheckIfimageGetExtension(IFormFile formFile)
         {
+            string nujhn = formFile.ContentType;
+
             string file = Path.GetExtension(formFile.FileName.ToUpper());
             if (Messages.ValidImageFileTypes.Any(t => t == file))
             {

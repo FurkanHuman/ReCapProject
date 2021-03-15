@@ -39,9 +39,11 @@ namespace Business.Concrete
             if (result != null)
                 return result;
 
-            carImage.Date = DateTime.Now;
-            carImage.ImagePath = FileHelper.AddAsync(formFile);
-            _carImageDal.Add(carImage);
+            CarImage cImage = new CarImage() { CarId = carImage.CarId };
+
+            cImage.Date = DateTime.Now;
+            cImage.ImagePath = FileHelper.AddAsync(formFile);
+            _carImageDal.Add(cImage);
 
             return new SuccessResult();
         }
@@ -55,9 +57,8 @@ namespace Business.Concrete
             if (result != null)
                 return result;
 
-            CarImage cImage = new CarImage() { CarId = carImage.CarId };
             foreach (var file in files)
-                Add(file, cImage);
+                Add(file, carImage);
             return new SuccessResult();
         }
 
@@ -89,10 +90,16 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheAspect(5)]
-        public IDataResult<List<CarImage>> GetImagesByCarId(int id)
+        public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
-
+            var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
+            if (!result)
+            {
+                List<CarImage> carImage = new List<CarImage>();
+                carImage.Add(new CarImage { ImagePath = @"\Images\default.jpg", CarId = carId });
+                return new SuccessDataResult<List<CarImage>>(carImage);
+            }
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(Cı => Cı.CarId == carId));
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
@@ -105,31 +112,7 @@ namespace Business.Concrete
             _carImageDal.Update(entity);
             return new SuccessResult();
         }
-        private IDataResult<List<CarImage>> CheckIfCarImageNull(int id)
-        {
-            try
-            {
-                List<CarImage> carImages = new List<CarImage>();
-                var result = _carImageDal.GetAll(ci => ci.CarId == id);
-                foreach (var image in result)
-                {
-                    if (image.ImagePath == null)
-                    {
-                        carImages.Add(new CarImage
-                        {
-                            ImagePath = @"/Images/default.jpg"
-                        });
-                        return new SuccessDataResult<List<CarImage>>(carImages);
-                    }
-                }
-                return new SuccessDataResult<List<CarImage>>(result);
-            }
 
-            catch (Exception e)
-            {
-                return new ErrorDataResult<List<CarImage>>(e.Message);
-            }
-        }
         private IResult CheckIfImageLimit(int carid)
         {
             var carImagecount = _carImageDal.GetAll(p => p.CarId == carid).Count;

@@ -1,5 +1,4 @@
-﻿using Core.Aspects.Autofac.Performance;
-using Core.Utilities.Results.Abstract;
+﻿using Core.Utilities.Results.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;

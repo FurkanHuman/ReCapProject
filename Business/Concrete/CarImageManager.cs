@@ -50,10 +50,11 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult AddCollective(IFormFile[] files, CarImage carImage)
         {
-            IResult result = BusinessRules.Run(
-            CheckIfImageCout(files));
+            IResult result = BusinessRules.Run(CheckIfImageCout(files));
+
             if (result != null)
                 return result;
+
             CarImage cImage = new CarImage() { CarId = carImage.CarId };
             foreach (var file in files)
                 Add(file, cImage);

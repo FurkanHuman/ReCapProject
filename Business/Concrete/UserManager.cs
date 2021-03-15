@@ -1,5 +1,4 @@
 ﻿using Business.Abstract;
-using Business.BusinessAspect.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Entities.Concrete;
@@ -37,7 +36,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(UserValidator))]
-    //    [SecuredOperation("Manager")]
+        //    [SecuredOperation("Manager")]
         [CacheAspect(15)]
         public List<OperationClaim> GetClaims(User user)
         {

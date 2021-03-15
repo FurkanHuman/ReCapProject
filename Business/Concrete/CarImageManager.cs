@@ -20,8 +20,6 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-
-
         readonly ICarImageDal _carImageDal;
         public CarImageManager(ICarImageDal carImageDal)
         {
@@ -71,7 +69,6 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-
         [ValidationAspect(typeof(BrandValidator))]
         [SecuredOperation("Manager")]
         public IDataResult<List<CarImage>> GetAll()
@@ -79,14 +76,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheAspect(5)]
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == id));
         }
-
 
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheAspect(5)]

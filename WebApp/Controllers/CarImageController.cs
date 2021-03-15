@@ -44,9 +44,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult AddAsync([FromForm] IFormFile[] file, [FromForm] CarImage carImage)
+        public IActionResult AddAsync([FromForm] IFormFile[] files, [FromForm] CarImage carImage)
         {
-            var res = _carImageService.AddCollective(file, carImage);
+            var res = _carImageService.AddCollective(files, carImage);
             if (res.Success)
                 return Ok(res);
             return BadRequest(res);

@@ -31,17 +31,20 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheRemoveAspect("ICarImageService.Get")]
-        public IResult Add(IFormFile formFile, CarImage entity)
+        public IResult Add(IFormFile[] formFile, CarImage entity)
+            
         {
+            foreach (var file in formFile)
+            {
+                CarImage carImage = new CarImage() { CarId = entity.CarId };
+                IResult result = BusinessRules.Run(CheckIfImageLimit(carImage.CarId), CheckIfimageGetExtension(file));
+                if (result != null)
+                    return result;
 
-            IResult result = BusinessRules.Run(CheckIfImageLimit(entity.CarId), CheckIfimageGetExtension(formFile));
-            if (result != null)
-                return result;
-
-            entity.Date = DateTime.Now;
-            entity.ImagePath = FileHelper.AddAsync(formFile);
-            _carImageDal.Add(entity);
-
+                carImage.Date = DateTime.Now;
+                carImage.ImagePath = FileHelper.AddAsync(file);
+                _carImageDal.Add(carImage);
+            }
             return new SuccessResult();
         }
 

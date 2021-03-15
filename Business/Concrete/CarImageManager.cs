@@ -29,22 +29,34 @@ namespace Business.Concrete
             FileHelper.fullPath = Environment.CurrentDirectory + @"\wwwroot\Images\";
         }
 
+        public IResult Add(IFormFile formFile, CarImage carImage)
+        {
+            IResult result = BusinessRules.Run(
+                CheckIfImageLimit(carImage.CarId),
+                CheckIfimageGetExtension(formFile)
+                );
+
+            if (result != null)
+                return result;
+
+            carImage.Date = DateTime.Now;
+            carImage.ImagePath = FileHelper.AddAsync(formFile);
+            _carImageDal.Add(carImage);
+
+            return new SuccessResult();
+        }
+
         [ValidationAspect(typeof(CarImageValidator))]
         [CacheRemoveAspect("ICarImageService.Get")]
-        public IResult Add(IFormFile[] formFile, CarImage entity)
-            
+        public IResult AddCollective(IFormFile[] files, CarImage carImage)
         {
-            foreach (var file in formFile)
-            {
-                CarImage carImage = new CarImage() { CarId = entity.CarId };
-                IResult result = BusinessRules.Run(CheckIfImageLimit(carImage.CarId), CheckIfimageGetExtension(file));
-                if (result != null)
-                    return result;
-
-                carImage.Date = DateTime.Now;
-                carImage.ImagePath = FileHelper.AddAsync(file);
-                _carImageDal.Add(carImage);
-            }
+            IResult result = BusinessRules.Run(
+            CheckIfImageCout(files));
+            if (result != null)
+                return result;
+            CarImage cImage = new CarImage() { CarId = carImage.CarId };
+            foreach (var file in files)
+                Add(file, cImage);
             return new SuccessResult();
         }
 
@@ -100,53 +112,43 @@ namespace Business.Concrete
                 var result = _carImageDal.GetAll(ci => ci.CarId == id);
                 foreach (var image in result)
                 {
-
-
                     if (image.ImagePath == null)
                     {
-
                         carImages.Add(new CarImage
                         {
                             ImagePath = @"/Images/default.jpg"
                         });
                         return new SuccessDataResult<List<CarImage>>(carImages);
                     }
-                    else
-                    {
-                        image.ImagePath.Replace("\\", "/");
-                        carImages.Add(image);
-                    }
                 }
                 return new SuccessDataResult<List<CarImage>>(result);
-
             }
+
             catch (Exception e)
             {
-
                 return new ErrorDataResult<List<CarImage>>(e.Message);
             }
         }
-
         private IResult CheckIfImageLimit(int carid)
         {
             var carImagecount = _carImageDal.GetAll(p => p.CarId == carid).Count;
             if (carImagecount >= 5)
-            {
                 return new ErrorResult();
-            }
             return new SuccessResult();
         }
-
         private IResult CheckIfimageGetExtension(IFormFile formFile)
         {
-            string nujhn = formFile.ContentType;
+            string fileName = Path.GetExtension(formFile.FileName.ToUpper());
+            if (!Messages.ValidImageFileTypes.Any(t => t == fileName))
+                return new ErrorResult();
 
-            string file = Path.GetExtension(formFile.FileName.ToUpper());
-            if (Messages.ValidImageFileTypes.Any(t => t == file))
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult();
+            return new SuccessResult();
+        }
+        private IResult CheckIfImageCout(IFormFile[] formFiles)
+        {
+            if (formFiles.Count() > 5)
+                return new ErrorResult();
+            return new SuccessResult();
         }
     }
 }

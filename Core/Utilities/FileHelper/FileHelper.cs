@@ -19,7 +19,6 @@ namespace Core.Utilities.FileHelper
                     file.CopyTo(stream);
                     stream.Flush();
                 }
-
             }
             catch (Exception exception)
             {

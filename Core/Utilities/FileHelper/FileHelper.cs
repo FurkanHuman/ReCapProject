@@ -76,7 +76,7 @@ namespace Core.Utilities.FileHelper
             if (!Directory.Exists(fullPath))
                 Directory.CreateDirectory(result);
 
-            return (result, @"\wwwroot\Images\" + creatingUniqueFilename);
+            return (result, @"\Images\" + creatingUniqueFilename);
         }
     }
 }

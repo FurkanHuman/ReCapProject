@@ -69,15 +69,15 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [ValidationAspect(typeof(BrandValidator))]
-        [SecuredOperation("Manager")]
+        [ValidationAspect(typeof(CarImageValidator))]
+        //       [SecuredOperation("Manager")]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        [CacheAspect(5)]
+      //  [CacheAspect(5)]
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == id));
@@ -120,7 +120,6 @@ namespace Business.Concrete
             string fileName = Path.GetExtension(formFile.FileName.ToUpper());
             if (!Messages.ValidImageFileTypes.Any(t => t == fileName))
                 return new ErrorResult();
-
             return new SuccessResult();
         }
         private IResult CheckIfImageCout(IFormFile[] formFiles)

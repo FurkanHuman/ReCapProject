@@ -10,6 +10,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult AddCollective(IFormFile[] files, CarImage carImage)
         {
-            IResult result = BusinessRules.Run(CheckIfImageCout(files));
+            IResult result = BusinessRules.Run(CheckIfImageCount(files));
 
             if (result != null)
                 return result;
@@ -70,31 +71,28 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        //       [SecuredOperation("Manager")]
+        [CacheAspect(20)]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-      //  [CacheAspect(5)]
+        [CacheAspect(10)]
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == id));
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        [CacheAspect(5)]
-        public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
+        [CacheAspect(10)]
+        public IDataResult<List<CarImage>> GetByCarId(int id)
         {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
-            if (!result)
-            {
-                List<CarImage> carImage = new List<CarImage>();
-                carImage.Add(new CarImage { ImagePath = @"\Images\default.jpg", CarId = carId });
-                return new SuccessDataResult<List<CarImage>>(carImage);
-            }
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(Cı => Cı.CarId == carId));
+            //return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p => p.CarId == id)).Data==null?:;
+            var result = _carImageDal.GetAll(p => p.CarId == id);
+            return result.Count > 0 ?
+                new SuccessDataResult<List<CarImage>>(result) :
+                new SuccessDataResult<List<CarImage>>(new List<CarImage>() { new CarImage { ImagePath = @"\Images\default.png", CarId = id } });
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
@@ -122,9 +120,9 @@ namespace Business.Concrete
                 return new ErrorResult();
             return new SuccessResult();
         }
-        private IResult CheckIfImageCout(IFormFile[] formFiles)
+        private IResult CheckIfImageCount(IFormFile[] formFiles)
         {
-            if (formFiles.Count() > 5)
+            if (formFiles.Count() > 5 && formFiles.Count() < 0)
                 return new ErrorResult();
             return new SuccessResult();
         }

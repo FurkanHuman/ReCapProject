@@ -12,18 +12,11 @@ namespace Core.Utilities.FileHelper
         public static string AddAsync(IFormFile file)
         {
             var (path, halfPath) = NewPath(file);
-            try
-            {
                 using (FileStream stream = File.Create(path))
                 {
                     file.CopyTo(stream);
                     stream.Flush();
                 }
-            }
-            catch (Exception exception)
-            {
-                return exception.Message;
-            }
             return halfPath;
         }
 
@@ -31,37 +24,19 @@ namespace Core.Utilities.FileHelper
         {
             var (path, halfPath) = NewPath(file);
 
-            try
+            using (FileStream stream = File.Create(path))
             {
-                using (FileStream stream = File.Create(path))
-                {
-                    file.CopyTo(stream);
-                    stream.Flush();
-                }
-
-                DeleteAsync(sourcePath);
-            }
-            catch (Exception exception)
-            {
-
-                return exception.Message;
+                file.CopyTo(stream);
+                stream.Flush();
             }
 
+            DeleteAsync(sourcePath);
             return halfPath;
         }
 
         public static IResult DeleteAsync(string path)
         {
-            try
-            {
-                File.Delete(Environment.CurrentDirectory + path);
-            }
-
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
-
+            File.Delete(Environment.CurrentDirectory + path);
             return new SuccessResult();
         }
 

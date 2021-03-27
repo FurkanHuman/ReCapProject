@@ -16,14 +16,14 @@ namespace DataAccess.Concrete.EntityFrameWork
             using (ReCapDBContext context = new ReCapDBContext())
             {
                 IQueryable<CarDetailDto> carDetailsDtos = from c in filter is null ? context.Cars : context.Cars.Where(filter)
-                             join b in context.Brands
-                             on c.BrandId equals b.Id
 
-                             join cl in context.Colors
-                             on c.ColorId equals cl.Id
+                                                          join b in context.Brands
+                                                          on c.BrandId equals b.Id
 
-                             select new CarDetailDto { Id = c.Id, BrandName = b.Name, ColorName = cl.Name, ModelYear = c.ModelYear, Descriptions = c.Descriptions, DailyPrice = c.DailyPrice};
+                                                          join cl in context.Colors
+                                                          on c.ColorId equals cl.Id
 
+                                                          select new CarDetailDto { Id = c.Id, BrandName = b.Name, ColorName = cl.Name, ModelYear = c.ModelYear, Descriptions = c.Descriptions, DailyPrice = c.DailyPrice };
                 return carDetailsDtos.ToList();
             }
         }

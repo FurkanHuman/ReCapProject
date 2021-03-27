@@ -64,10 +64,15 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
 
-        [CacheAspect(12)]
+        //[CacheAspect(12)]
         public IDataResult<List<CarDetailDto>> GetCarDetailDtos()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.Listed);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailDtosById(int id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c=> c.Id==id), Messages.Listed);
         }
 
         [CacheRemoveAspect("ICarService.Get")]

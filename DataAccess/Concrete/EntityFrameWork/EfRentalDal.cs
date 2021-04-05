@@ -5,16 +5,17 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFrameWork
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapDBContext>, IRentalDal
     {
-        public List<RentalDetailDto> GetRentalDetailDtos()
+        public List<RentalDetailDto> GetRentalDetailDtos(Expression<Func<Rental, bool>> filter = null)
         {
             using (ReCapDBContext context = new ReCapDBContext())
             {
-                var result = from r in context.Rentals
+                IQueryable<RentalDetailDto> result = from r in filter is null ? context.Rentals : context.Rentals.Where(filter)
 
                              join c in context.Cars
                              on r.CarId equals c.Id

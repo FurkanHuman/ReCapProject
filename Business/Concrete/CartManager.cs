@@ -12,9 +12,9 @@ namespace Business.Concrete
     {
         public IResult CartToValidate(Cart cart)
         {
-            if (cart.CartNumber.Length==16&&cart.Month!=DateTime.Now.Month&&cart.Year!=DateTime.Now.Year)
+            if (cart.CartNumber.Length==16&&cart.Month>=DateTime.Now.Month&&cart.Year>=DateTime.Now.Year)
             {
-                return new SuccessResult("Ödeme Alındı.");
+                return new SuccessResult(cart.TotalPrice+" TL Ödeme Alındı.");
             }
             return new ErrorResult("Ödeme Başarısız.");
         }

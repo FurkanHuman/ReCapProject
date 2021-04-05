@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    interface ICartService
+    public interface ICartService
     {
         IResult CartToValidate(Cart cart); 
     }
